@@ -1,0 +1,16 @@
+== ABOUT ==
+
+fluiddb allows you to make calls to the fluidb api in Python.
+This is a lot based on http://bitbucket.org/sanxiyn/fluidfs/
+
+== REQUIREMENTS ==
+
+ * Python (tested with 2.5.4, 2.6.2)	
+
+== SUPPORTED PLATFORMS ==
+
+Linux, Windows, Mac, etc
+
+== INSTALLATION ==
+
+$> python setup.py install
