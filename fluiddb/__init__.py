@@ -31,8 +31,11 @@ def call(method, path, body=None, **kwargs):
     if kwargs:
         url = '%s?%s' % (url, urllib.urlencode(kwargs))
     headers = global_headers.copy()
-    if body:
+    if isinstance(body, dict):
         headers['content-type'] = 'application/json'
+        body = json.dumps(body)
+    elif body:
+        headers['content-type'] = 'text/plain'
     response, result = http.request(url, method, body, headers)
     status = response.status
     if response['content-type'].startswith('application/json'):
