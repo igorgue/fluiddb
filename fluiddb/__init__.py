@@ -10,13 +10,27 @@ except ImportError:
 
 prefix = 'http://fluiddb.fluidinfo.com'
 
+global_headers = {
+    'Accept': 'application/json',
+}
+
+def login(username, password):
+    """login by adding auth to the headers"""
+    userpass = '%s:%s' % (username, password)
+    auth = 'Basic %s' % userpass.encode('base64').strip()
+    global_headers['Authorization'] = auth
+
+def logout():
+    """logout by deleting the auth header"""
+    global_headers.pop('Authorization', None)
+
 def call(method, path, body=None, **kwargs):
     """call a method in FluidDB http"""
     http = httplib2.Http()
     url = prefix + urllib.quote(path)
     if kwargs:
         url = '%s?%s' % (url, urllib.urlencode(kwargs))
-    headers = dict(Accept='application/json')
+    headers = global_headers.copy()
     if body:
         headers['content-type'] = 'application/json'
     response, result = http.request(url, method, body, headers)
